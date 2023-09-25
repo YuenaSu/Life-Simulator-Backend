@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2021", // Node 16 supports ES2021
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "rootDir": "./",
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "ts-node": {
+    // Tell ts-node CLI to install the --loader automatically
+    "esm": true
+  }
+}

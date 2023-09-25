@@ -1,0 +1,11 @@
+runtime: nodejs18
+
+env_variables: 
+  DB_URI: "mongodb_url"
+  DB_NAME: "db_name"
+  SALT_ROUNDS: "salt"
+  EMAIL_USER: "email"
+  SENDGRID_API_KEY: “api_key”
+  ENV: "production"
+  SESSION_SECRET: "secret"
+  COR_URL: ""
