@@ -10,6 +10,7 @@ import GameDao from '../dao/gameDAO.js';
 
 import Game from '../model/game/game.js';
 import GameObject from '../game/game.js';
+import { cars, houses } from '../game/enums.js';
 
 export default class GameController {
   static async apiPostGame(req: Request, res: Response) {
@@ -19,13 +20,14 @@ export default class GameController {
         return;
       }
       const userId = req.session?.user?.userId;
-
+      const randomJob = getRandomJobOnLevel(0);
       const game: Game = {
         userId: new ObjectId(userId),
         message: 'You graduated from college and started your first job.',
         isOver: false,
         details: {
-          job: getRandomJobOnLevel(1),
+          job: randomJob.job,
+          jobCategory: randomJob.category,
           houses: [],
           cars: [],
           movies: [],
@@ -53,6 +55,19 @@ export default class GameController {
     } catch (e) {
       console.error(`Unable to create game: ${e}`);
       res.status(500).json({ error: 'Unable to create the game' });
+    }
+  }
+  static async apiGetProperties(req: Request, res: Response) {
+    try {
+      // if (!roleCheck(req, contentLevels.free)) {
+      //   res.sendStatus(403);
+      //   return;
+      // }
+      const properties = { houses, cars };
+      res.status(200).json(properties);
+    } catch (e) {
+      console.error(`Unable to get all properties that are available for purchasing: ${e}`);
+      res.status(500).json({ error: e });
     }
   }
 

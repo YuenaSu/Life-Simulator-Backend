@@ -1,4 +1,4 @@
-import Job from '../model/game/job.js';
+//import Job from '../model/game/job.js';
 import Property from '../model/game/property.js';
 
 export enum moment {
@@ -33,481 +33,371 @@ export enum promotionMode {
     " Under the pressure from the son of your cousin's junior high school desk mate's neighbor's aunt, your manager has no choice but to promote you.",
 }
 
-export const cars: {
-  [key: string]: {
-    property: Property;
-  };
-} = {
-  'a Honda Fit': {
-    property: {
-      name: 'a Honda Fit',
-      value: 20000,
-      currentValue: 15000,
-    },
-  },
-  'a Tesla Model S': {
-    property: {
-      name: 'a Tesla Model S',
-      value: 70000,
-      currentValue: 60000,
-    },
-  },
-  'a BMW 760i xDrive': {
-    property: {
-      name: 'a BMW 760i xDrive',
-      value: 110000,
-      currentValue: 80000,
-    },
-  },
-  'a McLaren 720S': {
-    property: {
-      name: 'a McLaren 720S',
-      value: 300000,
-      currentValue: 250000,
-    },
-  },
-  'a Bugatti Chiron': {
-    property: {
-      name: 'a Bugatti Chiron',
-      value: 3000000,
-      currentValue: 2500000,
-    },
-  },
-};
+export const cars: Property[] = [
+  { name: 'a Honda Fit', value: 20000 },
+  { name: 'a Tesla Model S', value: 70000 },
+  { name: 'a BMW 760i xDrive', value: 110000 },
+  { name: 'a McLaren 720S', value: 300000 },
+  { name: 'a Bugatti Chiron', value: 3000000 },
+];
 
-export const houses: {
-  [key: string]: {
-    property: Property;
-  };
-} = {
-  'a 1B1B apartment in a suburban area': {
-    property: {
-      name: 'a 1B1B apartment in a suburban area',
-      value: 100000,
-      currentValue: 110000,
-    },
+export const houses: Property[] = [
+  { name: 'a 1B1B apartment in a suburban area', value: 350000 },
+  { name: 'a house in a suburban area', value: 1000000 },
+  { name: 'a 3B2B apartment in a downtown area', value: 3000000 },
+  { name: 'a house in a downtown area', value: 8000000 },
+  {
+    name: 'a top-level penthouse on the tallest building in the heart of the city',
+    value: 100000000,
   },
-  'a house in a suburban area': {
-    property: {
-      name: 'a house in a suburban area',
-      value: 1000000,
-      currentValue: 1200000,
-    },
-  },
-  'a 3B2B apartment in a downtown area': {
-    property: {
-      name: 'a 3B2B apartment in a downtown area',
-      value: 5000000,
-      currentValue: 5800000,
-    },
-  },
-  'a house in a downtown area': {
-    property: {
-      name: 'a house in a downtown area',
-      value: 10000000,
-      currentValue: 12000000,
-    },
-  },
-  'a top-level penthouse on the tallest building in the heart of the city': {
-    property: {
-      name: 'a top-level penthouse on the tallest building in the heart of the city',
-      value: 100000000,
-      currentValue: 150000000,
-    },
-  },
-};
+];
+
+// export const cars: {
+//   [key: string]: {
+//     property: Property;
+//   };
+// } = {
+//   'a Honda Fit': {
+//     property: {
+//       name: 'a Honda Fit',
+//       value: 20000,
+//       currentValue: 15000,
+//     },
+//   },
+//   'a Tesla Model S': {
+//     property: {
+//       name: 'a Tesla Model S',
+//       value: 70000,
+//       currentValue: 60000,
+//     },
+//   },
+//   'a BMW 760i xDrive': {
+//     property: {
+//       name: 'a BMW 760i xDrive',
+//       value: 110000,
+//       currentValue: 80000,
+//     },
+//   },
+//   'a McLaren 720S': {
+//     property: {
+//       name: 'a McLaren 720S',
+//       value: 300000,
+//       currentValue: 250000,
+//     },
+//   },
+//   'a Bugatti Chiron': {
+//     property: {
+//       name: 'a Bugatti Chiron',
+//       value: 3000000,
+//       currentValue: 2500000,
+//     },
+//   },
+// };
+
+// export const houses: {
+//   [key: string]: {
+//     property: Property;
+//   };
+// } = {
+//   'a 1B1B apartment in a suburban area': {
+//     property: {
+//       name: 'a 1B1B apartment in a suburban area',
+//       value: 100000,
+//       currentValue: 110000,
+//     },
+//   },
+//   'a house in a suburban area': {
+//     property: {
+//       name: 'a house in a suburban area',
+//       value: 1000000,
+//       currentValue: 1200000,
+//     },
+//   },
+//   'a 3B2B apartment in a downtown area': {
+//     property: {
+//       name: 'a 3B2B apartment in a downtown area',
+//       value: 5000000,
+//       currentValue: 5800000,
+//     },
+//   },
+//   'a house in a downtown area': {
+//     property: {
+//       name: 'a house in a downtown area',
+//       value: 10000000,
+//       currentValue: 12000000,
+//     },
+//   },
+//   'a top-level penthouse on the tallest building in the heart of the city': {
+//     property: {
+//       name: 'a top-level penthouse on the tallest building in the heart of the city',
+//       value: 100000000,
+//       currentValue: 150000000,
+//     },
+//   },
+// };
 
 export interface JobLadder {
-  Job: Job;
+  title: string;
+  salary: number;
   level: number;
-  next?: string;
 }
 
+//key is  jobCategory: String
 export const Jobs: {
-  [key: string]: JobLadder;
+  [key: string]: JobLadder[];
 } = {
   // Software Engineer
-  'Junior Software Engineer': {
-    Job: {
+  SDE: [
+    {
       title: 'Junior Software Engineer',
-      salary: 50000,
+      salary: 60000,
+      level: 0,
     },
-    level: 1,
-    next: 'Software Engineer',
-  },
-  'Software Engineer': {
-    Job: {
+    {
       title: 'Software Engineer',
-      salary: 100000,
+      salary: 110000,
+      level: 1,
     },
-    level: 2,
-    next: 'Senior Software Engineer',
-  },
-  'Senior Software Engineer': {
-    Job: {
+    {
       title: 'Senior Software Engineer',
       salary: 150000,
+      level: 2,
     },
-    level: 3,
-    next: 'Principal Software Engineer',
-  },
-  'Principal Software Engineer': {
-    Job: {
+    {
       title: 'Principal Software Engineer',
       salary: 200000,
+      level: 3,
     },
-    level: 4,
-    next: 'Lead Software Engineer',
-  },
-  'Lead Software Engineer': {
-    Job: {
+    {
       title: 'Lead Software Engineer',
       salary: 220000,
+      level: 4,
     },
-    level: 5,
-    next: 'Engineering Manager',
-  },
-  'Engineering Manager': {
-    Job: {
+    {
       title: 'Engineering Manager',
       salary: 250000,
+      level: 5,
     },
-    level: 6,
-    next: 'Director of Engineering',
-  },
-  'Director of Engineering': {
-    Job: {
+    {
       title: 'Director of Engineering',
-      salary: 300000,
+      salary: 290000,
+      level: 6,
     },
-    level: 7,
-    next: 'Vice President of Engineering',
-  },
-  'Vice President of Engineering': {
-    Job: {
+    {
       title: 'Vice President of Engineering',
-      salary: 400000,
+      salary: 320000,
+      level: 7,
     },
-    level: 8,
-  },
+  ],
   // Nurse
-  'Nursing Assistant': {
-    Job: {
+  Nurse: [
+    {
       title: 'Nursing Assistant',
-      salary: 30000,
+      salary: 40000,
+      level: 0,
     },
-    level: 1,
-    next: 'Licensed Practical Nurse',
-  },
-  'Licensed Practical Nurse': {
-    Job: {
+    {
       title: 'Licensed Practical Nurse',
-      salary: 50000,
+      salary: 55000,
+      level: 1,
     },
-    level: 2,
-    next: 'Staff Nurse',
-  },
-  'Staff Nurse': {
-    Job: {
-      title: 'Staff Nurse',
-      salary: 85000,
+    {
+      title: 'Head Nurse',
+      salary: 95000,
+      level: 2,
     },
-    level: 3,
-    next: 'Nurse Supervisor',
-  },
-  'Nurse Supervisor': {
-    Job: {
+    {
       title: 'Nurse Supervisor',
-      salary: 100000,
+      salary: 110000,
+      level: 3,
     },
-    level: 4,
-    next: 'Clinical Nurse Specialist',
-  },
-  'Clinical Nurse Specialist': {
-    Job: {
+    {
       title: 'Clinical Nurse Specialist',
-      salary: 120000,
+      salary: 130000,
+      level: 4,
     },
-    level: 5,
-    next: 'Nurse Manager',
-  },
-  'Nurse Manager': {
-    Job: {
+    {
       title: 'Nurse Manager',
       salary: 150000,
+      level: 5,
     },
-    level: 6,
-    next: 'Nurse Administrator',
-  },
-  'Nurse Administrator': {
-    Job: {
+    {
       title: 'Nurse Administrator',
       salary: 200000,
+      level: 6,
     },
-    level: 7,
-    next: 'Chief Nursing Officer',
-  },
-  'Chief Nursing Officer': {
-    Job: {
+    {
       title: 'Chief Nursing Officer',
-      salary: 300000,
+      salary: 250000,
+      level: 7,
     },
-    level: 8,
-  },
-  // Marketing Manaer
-  'Marketing Assistant': {
-    Job: {
+  ],
+  Marketing: [
+    {
       title: 'Marketing Assistant',
-      salary: 50000,
+      salary: 48000,
+      level: 0,
     },
-    level: 1,
-    next: 'Marketing Specialist',
-  },
-  'Marketing Specialist': {
-    Job: {
+    {
       title: 'Marketing Specialist',
       salary: 70000,
+      level: 1,
     },
-    level: 2,
-    next: 'Marketing Associate Manager',
-  },
-  'Marketing Associate Manager': {
-    Job: {
+    {
       title: 'Marketing Associate Manager',
-      salary: 80000,
+      salary: 95000,
+      level: 2,
     },
-    level: 3,
-    next: 'Marketing Manager',
-  },
-  'Marketing Manager': {
-    Job: {
+    {
       title: 'Marketing Manager',
-      salary: 100000,
-    },
-    level: 4,
-    next: 'Senior Marketing Manager',
-  },
-  'Senior Marketing Manager': {
-    Job: {
-      title: 'Senior Marketing Manager',
       salary: 120000,
+      level: 3,
     },
-    level: 5,
-    next: 'Marketing Director',
-  },
-  'Marketing Director': {
-    Job: {
+    {
+      title: 'Senior Marketing Manager',
+      salary: 140000,
+      level: 4,
+    },
+    {
       title: 'Marketing Director',
-      salary: 150000,
+      salary: 190000,
+      level: 5,
     },
-    level: 6,
-    next: 'Vice President of Marketing',
-  },
-  'Vice President of Marketing': {
-    Job: {
+    {
       title: 'Vice President of Marketing',
-      salary: 200000,
+      salary: 230000,
+      level: 6,
     },
-    level: 7,
-    next: 'Chief Marketing Officer',
-  },
-  'Chief Marketing Officer': {
-    Job: {
+    {
       title: 'Chief Marketing Officer',
-      salary: 300000,
+      salary: 265000,
+      level: 7,
     },
-    level: 8,
-  },
-  // Accountant
-  'Accounting Assistant': {
-    Job: {
+  ],
+  Accountant: [
+    {
       title: 'Accounting Assistant',
-      salary: 50000,
+      salary: 58000,
+      level: 0,
     },
-    level: 1,
-    next: 'Accountant',
-  },
-  Accountant: {
-    Job: {
+    {
       title: 'Accountant',
       salary: 70000,
+      level: 1,
     },
-    level: 2,
-    next: 'Senior Accountant',
-  },
-  'Senior Accountant': {
-    Job: {
+    {
       title: 'Senior Accountant',
       salary: 80000,
+      level: 2,
     },
-    level: 3,
-    next: 'Accounting Manager',
-  },
-  'Accounting Manager': {
-    Job: {
+    {
       title: 'Accounting Manager',
-      salary: 100000,
+      salary: 110000,
+      level: 3,
     },
-    level: 4,
-    next: 'Controller',
-  },
-  Controller: {
-    Job: {
+    {
       title: 'Controller',
-      salary: 120000,
+      salary: 130000,
+      level: 4,
     },
-    level: 5,
-    next: 'Director of Accounting',
-  },
-  'Director of Accounting': {
-    Job: {
+    {
       title: 'Director of Accounting',
-      salary: 150000,
+      salary: 170000,
+      level: 5,
     },
-    level: 6,
-    next: 'Vice President of Accounting',
-  },
-  'Vice President of Accounting': {
-    Job: {
+    {
       title: 'Vice President of Accounting',
-      salary: 200000,
+      salary: 210000,
+      level: 6,
     },
-    level: 7,
-    next: 'Chief Financial Officer',
-  },
-  'Chief Financial Officer': {
-    Job: {
+    {
       title: 'Chief Financial Officer',
       salary: 300000,
+      level: 7,
     },
-    level: 8,
-  },
-  // Sales
-  'Sales Assistant': {
-    Job: {
+  ],
+  Sales: [
+    {
       title: 'Sales Assistant',
-      salary: 50000,
+      salary: 47000,
+      level: 0,
     },
-    level: 1,
-    next: 'Sales Representative',
-  },
-  'Sales Representative': {
-    Job: {
+    {
       title: 'Sales Representative',
-      salary: 70000,
+      salary: 69000,
+      level: 1,
     },
-    level: 2,
-    next: 'Sales Associate',
-  },
-  'Sales Associate': {
-    Job: {
+    {
       title: 'Sales Associate',
       salary: 80000,
+      level: 2,
     },
-    level: 3,
-    next: 'Sales Executive',
-  },
-  'Sales Executive': {
-    Job: {
+    {
       title: 'Sales Executive',
-      salary: 100000,
+      salary: 130000,
+      level: 3,
     },
-    level: 4,
-    next: 'Sales Manager',
-  },
-  'Sales Manager': {
-    Job: {
+    {
       title: 'Sales Manager',
-      salary: 120000,
-    },
-    level: 5,
-    next: 'Sales Director',
-  },
-  'Sales Director': {
-    Job: {
-      title: 'Sales Director',
       salary: 150000,
+      level: 4,
     },
-    level: 6,
-    next: 'Vice President of Sales',
-  },
-  'Vice President of Sales': {
-    Job: {
+    {
+      title: 'Sales Director',
+      salary: 170000,
+      level: 5,
+    },
+    {
       title: 'Vice President of Sales',
       salary: 200000,
+      level: 6,
     },
-    level: 7,
-    next: 'Chief Sales Officer',
-  },
-  'Chief Sales Officer': {
-    Job: {
+    {
       title: 'Chief Sales Officer',
-      salary: 300000,
+      salary: 240000,
+      level: 7,
     },
-    level: 8,
-  },
-  // Doctor
-  'Medical Assistant': {
-    Job: {
+  ],
+  Medical: [
+    {
       title: 'Medical Assistant',
       salary: 50000,
+      level: 0,
     },
-    level: 1,
-    next: 'Medical Technician',
-  },
-  'Medical Technician': {
-    Job: {
+    {
       title: 'Medical Technician',
       salary: 70000,
+      level: 1,
     },
-    level: 2,
-    next: 'Medical Technologist',
-  },
-  'Medical Technologist': {
-    Job: {
+    {
       title: 'Medical Technologist',
       salary: 80000,
+      level: 2,
     },
-    level: 3,
-    next: 'Resident Physician',
-  },
-  'Resident Physician': {
-    Job: {
+    {
       title: 'Resident Physician',
       salary: 100000,
+      level: 3,
     },
-    level: 4,
-    next: 'Attending Physician',
-  },
-  'Attending Physician': {
-    Job: {
+    {
       title: 'Attending Physician',
       salary: 300000,
+      level: 4,
     },
-    level: 5,
-    next: 'Surgeon',
-  },
-  Surgeon: {
-    Job: {
+    {
       title: 'Surgeon',
       salary: 400000,
+      level: 5,
     },
-    level: 6,
-    next: 'Chief Resident',
-  },
-  'Chief Resident': {
-    Job: {
+    {
       title: 'Chief Resident',
       salary: 500000,
+      level: 6,
     },
-    level: 7,
-    next: 'Medical Director',
-  },
-  'Medical Director': {
-    Job: {
+    {
       title: 'Medical Director',
       salary: 600000,
+      level: 7,
     },
-    level: 8,
-  },
+  ],
 };

@@ -1,6 +1,6 @@
 import Game from '../model/game/game.js';
-import Job from '../model/game/job.js';
 import Property from '../model/game/property.js';
+import { JobLadder } from './enums.js';
 
 export default class GameObject {
   game: Game;
@@ -49,12 +49,16 @@ export default class GameObject {
     this.game.stats.actionpoints += amount;
   }
 
-  changeJob(job: Job) {
+  changeJob(job: JobLadder) {
     this.game.details.job = job;
   }
 
   setMessage(message: string) {
     this.game.message = message;
+  }
+
+  changeCategory(category: string) {
+    this.game.details.jobCategory = category;
   }
 
   addCar(car: Property) {

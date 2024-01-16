@@ -1,4 +1,5 @@
 import { ObjectId, Collection, MongoClient } from 'mongodb';
+import Game from '../model/game/game.js';
 
 let games: Collection;
 
@@ -24,7 +25,16 @@ export default class GameDAO {
     }
   }
 
-  static async createOrUpdateGameByUserId(userId: string, game: any): Promise<any> {
+  // static async getPropertiesByGameId(gameId: string): Promise<any> {
+  //   try {
+  //     const game = await games.findOne({ _id: new ObjectId(gameId) });
+  //     return game;
+  //   } catch (e) {
+  //     console.error(`Unable to find game by userId: ${e}`);
+  //     return { error: e };
+  //   }
+  // }
+  static async createOrUpdateGameByUserId(userId: string, game: Game): Promise<any> {
     try {
       const updateResponse = await games.updateOne(
         { userId: new ObjectId(userId) },
