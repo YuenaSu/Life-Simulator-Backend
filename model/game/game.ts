@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 
+//import Stock from './stock.js';
 import Movie from './movie.js';
 import Business from './business.js';
 import Property from './property.js';
@@ -19,6 +20,7 @@ export default interface Game {
     movies: Array<Movie>;
     businesses: Array<Business>;
     properties: Array<Property>;
+    stocks: Array<Property>;
   };
   stats: Stats;
   remarkableMoments: Array<{

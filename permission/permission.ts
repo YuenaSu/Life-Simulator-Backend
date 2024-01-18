@@ -23,11 +23,11 @@ const rolePermissions = {
 };
 
 export const roleCheck = (req: Request, roles: string[]) => {
-  console.log(req.session);
-  if (req.session?.user) {
-    console.log('iam session user');
-    console.log(req.session.user);
-  }
+  // console.log(req.session);
+  // if (req.session?.user) {
+  //   console.log('iam session user');
+  //   console.log(req.session.user);
+  // }
   if (req.session?.user && roles.includes(req.session.user.role)) {
     return true;
   } else {

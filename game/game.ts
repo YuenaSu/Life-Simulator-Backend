@@ -68,4 +68,8 @@ export default class GameObject {
   addHouse(house: Property) {
     this.game.details.houses.push(house);
   }
+
+  addStock(stock: Property) {
+    this.game.details.stocks.push(stock);
+  }
 }

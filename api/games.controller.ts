@@ -10,7 +10,7 @@ import GameDao from '../dao/gameDAO.js';
 
 import Game from '../model/game/game.js';
 import GameObject from '../game/game.js';
-import { cars, houses } from '../game/enums.js';
+import { cars, houses, stocks } from '../game/enums.js';
 
 export default class GameController {
   static async apiPostGame(req: Request, res: Response) {
@@ -32,7 +32,8 @@ export default class GameController {
           cars: [],
           movies: [],
           businesses: [],
-          properties: [],
+          properties: [...cars, ...houses, ...stocks],
+          stocks: [],
         },
         stats: {
           age: 24,
@@ -57,16 +58,75 @@ export default class GameController {
       res.status(500).json({ error: 'Unable to create the game' });
     }
   }
-  static async apiGetProperties(req: Request, res: Response) {
+
+  // const buyActionReplicate = (product: string, type: 'house' | 'car') => {
+  //   return new Task({
+  //     run: function (game: GameObject) {
+  //       const property = type == 'house' ? houses[product] : cars[product];
+  //       const price = property.property.value;
+  //       const dollar = formatDollar(price);
+  //       if (game.checkCash(price)) {
+  //         game.setMessage(`You have spent ${dollar} to purchase ${product}.`);
+  //         game.changeCash(-price);
+  //         game.changeAsset(price);
+  //         if (type == 'house') {
+  //           game.addHouse(property.property);
+  //         } else {
+  //           game.addCar(property.property);
+  //         }
+  //         return SUCCESS;
+  //       } else {
+  //         game.setMessage(
+  //           `Your cash is not enough to purchase ${product} at the value of ${dollar}.`
+  //         );
+  //         return FAILURE;
+  //       }
+  //     },
+  //   });
+  // };
+  //need req to have the property
+  static async apiBuyProperty(req: Request, res: Response) {
     try {
-      // if (!roleCheck(req, contentLevels.free)) {
-      //   res.sendStatus(403);
-      //   return;
-      // }
-      const properties = { houses, cars };
-      res.status(200).json(properties);
+      if (!roleCheck(req, contentLevels.free)) {
+        res.sendStatus(403);
+        return;
+      }
+      const userId = req.session?.user?.userId;
+
+      const game: Game = await GameDao.getGameByUserId(userId);
+      if (!game) {
+        res.status(404).json({ error: 'Game not found' });
+        return;
+      }
+
+      let gameObj: GameObject | null = new GameObject(game);
+      const property = req.body.property;
+      if (gameObj.checkCash(property.value)) {
+        gameObj.setMessage(`You have spent ${property.value} to purchase ${property.type}.`);
+        gameObj.changeCash(-property.value);
+        gameObj.changeAsset(property.value);
+        //gameObj.changeActionPoints(-1);
+        if (property.type == 'house') {
+          gameObj.addHouse(property);
+        } else if (property.type == 'car') {
+          gameObj.addCar(property);
+        } else if (property.type == 'stock') {
+          gameObj.addStock(property);
+        }
+        const gameResponse = await GameDao.createOrUpdateGameByUserId(userId, gameObj.game);
+        if (gameResponse.error) {
+          res.status(500).json({ error: 'Unable to update game' });
+          return;
+        }
+        res.status(200).json({ game: gameObj.game });
+      } else {
+        res.status(400).json({
+          error: `Your cash is not enough to purchase ${property.type} at the value of ${property.value}.`,
+        });
+      }
+      gameObj = null;
     } catch (e) {
-      console.error(`Unable to get all properties that are available for purchasing: ${e}`);
+      console.error(`Unable to buy property in game: ${e}`);
       res.status(500).json({ error: e });
     }
   }

@@ -3,7 +3,7 @@ import { Sequence, Selector, Task, Random, SUCCESS, FAILURE } from 'behaviortree
 import GameObject from './game.js';
 import { Jobs, promotionMode, workingMode } from './enums.js';
 //import { Jobs, promotionMode, workingMode, cars, houses } from './enums.js';
-import { getRandomJobOnLevel, getRandomEnum } from './utils.js';
+import { getRandomJobOnLevel, getRandomEnum, getPricePercentChange } from './utils.js';
 //import { formatDollar } from '../util/stringUtils.js';
 
 // const buyActionReplicate = (product: string, type: 'house' | 'car') => {
@@ -113,32 +113,34 @@ const changeCareer = new Task({
   },
 });
 
+const pricePercentUpdate = new Task({
+  run: function (game: GameObject) {
+    const stocks = game.game.details.stocks;
+    const houses = game.game.details.houses;
+    const cars = game.game.details.cars;
+    const properties = game.game.details.properties;
+    //changing shangmiande
+    const allStuff = [...stocks, ...houses, ...cars, ...properties];
+    console.log(game.game.details);
+    console.log('all stuffs are' + allStuff);
+    allStuff.forEach((stuff) => {
+      const change = getPricePercentChange(
+        stuff.smallUp,
+        stuff.smallDown,
+        stuff.bigUp,
+        stuff.bigDown
+      );
+      stuff.value += stuff.value * change;
+      console.log('type is ' + stuff.type + 'change is ' + change);
+    });
+
+    return SUCCESS;
+  },
+});
+
 const work = new Random({
   nodes: [working, working, working, working, working, working, promote, promote, changeCareer],
 });
-
-// const buyHouse = new Selector({
-//   nodes: [
-//     buyActionReplicate(
-//       'a top-level penthouse on the tallest building in the heart of the city',
-//       'house'
-//     ),
-//     buyActionReplicate('a house in a downtown area', 'house'),
-//     buyActionReplicate('a 3B2B apartment in a downtown area', 'house'),
-//     buyActionReplicate('a house in a suburban area', 'house'),
-//     buyActionReplicate('a 1B1B apartment in a suburban area', 'house'),
-//   ],
-// });
-
-// const buyCar = new Selector({
-//   nodes: [
-//     buyActionReplicate('a Bugatti Chiron', 'car'),
-//     buyActionReplicate('a McLaren 720S', 'car'),
-//     buyActionReplicate('a BMW 760i xDrive', 'car'),
-//     buyActionReplicate('a Tesla Model S', 'car'),
-//     buyActionReplicate('a Honda Fit', 'car'),
-//   ],
-// });
 
 const thisYearAction = new Selector({
   nodes: [
@@ -170,5 +172,6 @@ export const tree = new Sequence({
     }),
     availabitiyCheck,
     thisYearAction,
+    pricePercentUpdate,
   ],
 });

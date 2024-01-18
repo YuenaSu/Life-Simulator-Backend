@@ -1,5 +1,6 @@
 //import Job from '../model/game/job.js';
 import Property from '../model/game/property.js';
+//import Stock from '../model/game/stock.js';
 
 export enum moment {
   OneMillion = 'Your asset has reached 1 million dollars!',
@@ -34,107 +35,157 @@ export enum promotionMode {
 }
 
 export const cars: Property[] = [
-  { name: 'a Honda Fit', value: 20000 },
-  { name: 'a Tesla Model S', value: 70000 },
-  { name: 'a BMW 760i xDrive', value: 110000 },
-  { name: 'a McLaren 720S', value: 300000 },
-  { name: 'a Bugatti Chiron', value: 3000000 },
-];
-
-export const houses: Property[] = [
-  { name: 'a 1B1B apartment in a suburban area', value: 350000 },
-  { name: 'a house in a suburban area', value: 1000000 },
-  { name: 'a 3B2B apartment in a downtown area', value: 3000000 },
-  { name: 'a house in a downtown area', value: 8000000 },
   {
-    name: 'a top-level penthouse on the tallest building in the heart of the city',
-    value: 100000000,
+    name: 'a Honda Fit',
+    value: 20000,
+    type: 'car',
+    smallUp: 0.01,
+    smallDown: 0.03,
+    bigUp: 0.05,
+    bigDown: 0.05,
+  },
+  {
+    name: 'a Tesla Model S',
+    value: 70000,
+    type: 'car',
+    smallUp: 0.01,
+    smallDown: 0.04,
+    bigUp: 0.04,
+    bigDown: 0.06,
+  },
+  {
+    name: 'a BMW 760i xDrive',
+    value: 110000,
+    type: 'car',
+    smallUp: 0.02,
+    smallDown: 0.01,
+    bigUp: 0.03,
+    bigDown: 0.03,
+  },
+  {
+    name: 'a McLaren 720S',
+    value: 300000,
+    type: 'car',
+    smallUp: 0.02,
+    smallDown: 0.03,
+    bigUp: 0.04,
+    bigDown: 0.04,
+  },
+  {
+    name: 'a Bugatti Chiron',
+    value: 3000000,
+    type: 'car',
+    smallUp: 0.02,
+    smallDown: 0.02,
+    bigUp: 0.08,
+    bigDown: 0.07,
   },
 ];
 
-// export const cars: {
-//   [key: string]: {
-//     property: Property;
-//   };
-// } = {
-//   'a Honda Fit': {
-//     property: {
-//       name: 'a Honda Fit',
-//       value: 20000,
-//       currentValue: 15000,
-//     },
-//   },
-//   'a Tesla Model S': {
-//     property: {
-//       name: 'a Tesla Model S',
-//       value: 70000,
-//       currentValue: 60000,
-//     },
-//   },
-//   'a BMW 760i xDrive': {
-//     property: {
-//       name: 'a BMW 760i xDrive',
-//       value: 110000,
-//       currentValue: 80000,
-//     },
-//   },
-//   'a McLaren 720S': {
-//     property: {
-//       name: 'a McLaren 720S',
-//       value: 300000,
-//       currentValue: 250000,
-//     },
-//   },
-//   'a Bugatti Chiron': {
-//     property: {
-//       name: 'a Bugatti Chiron',
-//       value: 3000000,
-//       currentValue: 2500000,
-//     },
-//   },
-// };
+export const houses: Property[] = [
+  {
+    name: 'a 1B1B apartment in a suburban area',
+    value: 350000,
+    type: 'house',
+    smallUp: 0.12,
+    smallDown: 0.03,
+    bigUp: 0.2,
+    bigDown: 0.05,
+  },
+  {
+    name: 'a house in a suburban area',
+    value: 1000000,
+    type: 'house',
+    smallUp: 0.15,
+    smallDown: 0.05,
+    bigUp: 0.3,
+    bigDown: 0.07,
+  },
+  {
+    name: 'a 3B2B apartment in a downtown area',
+    value: 3000000,
+    type: 'house',
+    smallUp: 0.15,
+    smallDown: 0.05,
+    bigUp: 0.29,
+    bigDown: 0.07,
+  },
+  {
+    name: 'a house in a downtown area',
+    value: 8000000,
+    type: 'house',
+    smallUp: 0.1,
+    smallDown: 0.07,
+    bigUp: 0.35,
+    bigDown: 0.09,
+  },
+  {
+    name: 'a top-level penthouse on the tallest building in the heart of the city',
+    value: 100000000,
+    type: 'house',
+    smallUp: 0.12,
+    smallDown: 0.03,
+    bigUp: 0.25,
+    bigDown: 0.09,
+  },
+];
 
-// export const houses: {
-//   [key: string]: {
-//     property: Property;
-//   };
-// } = {
-//   'a 1B1B apartment in a suburban area': {
-//     property: {
-//       name: 'a 1B1B apartment in a suburban area',
-//       value: 100000,
-//       currentValue: 110000,
-//     },
-//   },
-//   'a house in a suburban area': {
-//     property: {
-//       name: 'a house in a suburban area',
-//       value: 1000000,
-//       currentValue: 1200000,
-//     },
-//   },
-//   'a 3B2B apartment in a downtown area': {
-//     property: {
-//       name: 'a 3B2B apartment in a downtown area',
-//       value: 5000000,
-//       currentValue: 5800000,
-//     },
-//   },
-//   'a house in a downtown area': {
-//     property: {
-//       name: 'a house in a downtown area',
-//       value: 10000000,
-//       currentValue: 12000000,
-//     },
-//   },
-//   'a top-level penthouse on the tallest building in the heart of the city': {
-//     property: {
-//       name: 'a top-level penthouse on the tallest building in the heart of the city',
-//       value: 100000000,
-//       currentValue: 150000000,
-//     },
-//   },
-// };
+export const stocks: Property[] = [
+  {
+    name: 'Apple',
+    value: 125,
+    type: 'stock',
+    smallUp: 0.1,
+    smallDown: 0.05,
+    bigUp: 0.2,
+    bigDown: 0.15,
+  },
+  {
+    name: 'CVS',
+    value: 70,
+    type: 'stock',
+    smallUp: 0.14,
+    smallDown: 0.1,
+    bigUp: 0.18,
+    bigDown: 0.2,
+  },
+  {
+    name: 'Google',
+    value: 124,
+    type: 'stock',
+    smallUp: 0.05,
+    smallDown: 0.05,
+    bigUp: 0.13,
+    bigDown: 0.11,
+  },
+  {
+    name: 'Tesla',
+    value: 252,
+    type: 'stock',
+    smallUp: 0.09,
+    smallDown: 0.09,
+    bigUp: 0.3,
+    bigDown: 0.4,
+  },
+  {
+    name: 'Netflix',
+    value: 423,
+    type: 'stock',
+    smallUp: 0.1,
+    smallDown: 0.09,
+    bigUp: 0.19,
+    bigDown: 0.15,
+  },
+  {
+    name: 'LinkedIn',
+    value: 48,
+    type: 'stock',
+    smallUp: 0.1,
+    smallDown: 0.08,
+    bigUp: 0.2,
+    bigDown: 0.15,
+  },
+];
 
 export interface JobLadder {
   title: string;
